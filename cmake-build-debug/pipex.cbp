@@ -44,6 +44,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
@@ -64,6 +65,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
@@ -78,6 +80,159 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_atoi.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_bzero.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_calloc.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_isalnum.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_isalpha.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_isascii.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_isdigit.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_isprint.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_itoa.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_itoa_base.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_lstadd_back.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_lstadd_front.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_lstclear.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_lstdelone.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_lstiter.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_lstlast.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_lstmap.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_lstnew.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_lstsize.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_memccpy.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_memchr.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_memcmp.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_memcpy.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_memmove.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_memset.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_putchar.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_putchar_fd.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_putendl_fd.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_putnbr.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_putnbr_fd.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_putstr.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_putstr_fd.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_strchr.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_strdup.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_strjoin.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_strlcat.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_strlcpy.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_strlen.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_strmapi.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_strncmp.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_strnstr.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_strrchr.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_strtrim.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_substr.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_tolower.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_toupper.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_u_itoa.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_u_itoa_base.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/ft_ullitoa_base.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/get_next_line.c">
+			<Option target="pipex"/>
+		</Unit>
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/libft.h">
+			<Option target="pipex"/>
+		</Unit>
 		<Unit filename="/Users/jchevet/mygit/pipex/main.c">
 			<Option target="pipex"/>
 		</Unit>
