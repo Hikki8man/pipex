@@ -3,6 +3,8 @@
 #include "libft/include/libft.h"
 #include <fcntl.h>
 #include <errno.h>
+#define TRUE 1
+#define FALSE 0
 
 //fd[0] = READ
 //fd[1] = WRITE
@@ -57,6 +59,24 @@ void exit_perror(char *name)
 	exit(EXIT_FAILURE);
 }
 
+void	add_slash_to_path(char **path_tab)
+{
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	while (path_tab[i])
+	{
+		tmp = ft_strjoin(path_tab[i], "/");
+		if (!tmp)
+			exit(-1);
+		free(path_tab[i]);
+		path_tab[i] = tmp;
+		i++;
+	}
+}
+
+
 char	**split_env_path(char **envp)
 {
 	int	i;
@@ -67,6 +87,7 @@ char	**split_env_path(char **envp)
 		i++;
 	envp[i] += 5;
 	paths_tab = ft_split(envp[i], ':');
+	add_slash_to_path(paths_tab);
 	return (paths_tab);
 }
 
@@ -94,7 +115,6 @@ void	get_cmd(int ac, char **av, t_cmd **cmd_l)
 	i = 2;
 	while (i < ac - 1)
 	{
-//		printf("%s\n", av[i]);
 		cmd = new_cmd();
 		if (!cmd)
 			exit_perror("new_cmd");
@@ -106,13 +126,41 @@ void	get_cmd(int ac, char **av, t_cmd **cmd_l)
 	}
 }
 
+
+void get_cmd_path(t_cmd **cmd_list, char **path_tab)
+{
+	t_cmd	*tmp;
+	int 	i;
+
+	tmp = *cmd_list;
+	while (tmp)
+	{
+		i = 0;
+		while (path_tab[i])
+		{
+			tmp->path = ft_strjoin(path_tab[i], tmp->name);
+			if (tmp->path == NULL)
+				exit(2);
+			if (open(tmp->path, O_RDONLY) != -1)
+				break ;
+			free(tmp->path);
+			tmp->path = NULL;
+			i++;
+		}
+		if (tmp->path == NULL)
+			exit(3); //cmd not found / valid
+		tmp = tmp->next;
+	}
+	ft_free_str_tab(path_tab);
+}
+
 int main(int argc, char **argv, char **envp)
  {
 	int pid1;
 	int pid2;
 	int fd[2];
 	char *line;
-	char **paths_tab;
+	char **path_tab;
 	t_cmd *cmd_list;
 
 	cmd_list = NULL;
@@ -121,8 +169,9 @@ int main(int argc, char **argv, char **envp)
 			 "-la",
 			 NULL
 	};
-	paths_tab = split_env_path(envp);
+	path_tab = split_env_path(envp);
 	get_cmd(argc, argv, &cmd_list);
+	get_cmd_path(&cmd_list, path_tab);
 	int i;
 
 	while (cmd_list)
