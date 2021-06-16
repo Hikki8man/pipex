@@ -9,6 +9,7 @@
 //fd[0] = READ
 //fd[1] = WRITE
 
+
 typedef struct s_cmd
 {
 	char	*name;
@@ -17,6 +18,21 @@ typedef struct s_cmd
 	int 	nb_param;
 	struct s_cmd *next;
 }t_cmd;
+
+typedef struct s_data
+{
+	int		fd1;
+	int		fd2;
+	t_cmd	*cmd_list;
+}t_data;
+
+void	init_data(t_data *data)
+{
+	data->fd1 = 0;
+	data->fd2 = 0;
+	data->cmd_list = NULL;
+}
+
 
 t_cmd	*cmd_lst_last(t_cmd *cmd_l)
 {
@@ -91,11 +107,6 @@ char	**split_env_path(char **envp)
 	return (paths_tab);
 }
 
-void find_cmd_path(char **paths_tab, t_cmd *cmd_list, char **argv)
-{
-
-}
-
 int 	nb_of_param(char **param)
 {
 	int	i;
@@ -131,6 +142,7 @@ void get_cmd_path(t_cmd **cmd_list, char **path_tab)
 {
 	t_cmd	*tmp;
 	int 	i;
+	int 	isopen;
 
 	tmp = *cmd_list;
 	while (tmp)
@@ -141,7 +153,8 @@ void get_cmd_path(t_cmd **cmd_list, char **path_tab)
 			tmp->path = ft_strjoin(path_tab[i], tmp->name);
 			if (tmp->path == NULL)
 				exit(2);
-			if (open(tmp->path, O_RDONLY) != -1)
+			isopen = open(tmp->path, O_RDONLY;
+			if (isopen != -1)
 				break ;
 			free(tmp->path);
 			tmp->path = NULL;
@@ -154,6 +167,17 @@ void get_cmd_path(t_cmd **cmd_list, char **path_tab)
 	ft_free_str_tab(path_tab);
 }
 
+void openfiles(char **av, int ac, t_data *data)
+{
+	data->fd1 = open(av[1], O_RDWR, S_IRWXU);
+	if (data->fd1 == -1)
+		exit_perror("open");
+	data->fd2 = open(av[ac - 1], O_CREAT | O_RDWR, S_IRWXU);
+	if (data->fd2 == -1)
+		exit_perror("open");
+
+}
+
 int main(int argc, char **argv, char **envp)
  {
 	int pid1;
@@ -162,13 +186,10 @@ int main(int argc, char **argv, char **envp)
 	char *line;
 	char **path_tab;
 	t_cmd *cmd_list;
+	t_data data;
 
-	cmd_list = NULL;
-	char *arr[] = {
-			 "ls",
-			 "-la",
-			 NULL
-	};
+	init_data(&data);
+	openfiles(argv, argc, &data);
 	path_tab = split_env_path(envp);
 	get_cmd(argc, argv, &cmd_list);
 	get_cmd_path(&cmd_list, path_tab);
