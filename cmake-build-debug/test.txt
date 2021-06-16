@@ -1,0 +1,8 @@
+total 296
+-rw-r--r--   1 jchevet  2020  34767 Jun 16 13:06 CMakeCache.txt
+drwxr-xr-x  14 jchevet  2020    476 Jun 16 14:22 CMakeFiles
+-rw-r--r--   1 jchevet  2020  49946 Jun 16 13:07 Makefile
+drwxr-xr-x   3 jchevet  2020    102 Jun 11 13:21 Testing
+-rw-r--r--   1 jchevet  2020   1584 Jun 16 13:06 cmake_install.cmake
+drwxr-xr-x   2 jchevet  2020     68 Jun 14 07:21 libft
+-

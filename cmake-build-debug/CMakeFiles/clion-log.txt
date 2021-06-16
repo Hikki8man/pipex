@@ -1,4 +1,4 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/jchevet/mygit/pipex
+/private/var/folders/zz/zyxvpxvq6csfxvn_n0009pdh002dlc/T/AppTranslocation/EAD167B3-A9AF-4C4B-91DA-C147993C3A4D/d/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/jchevet/mygit/pipex
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /Users/jchevet/mygit/pipex/cmake-build-debug

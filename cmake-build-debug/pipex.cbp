@@ -230,7 +230,7 @@
 		<Unit filename="/Users/jchevet/mygit/pipex/libft/get_next_line.c">
 			<Option target="pipex"/>
 		</Unit>
-		<Unit filename="/Users/jchevet/mygit/pipex/libft/libft.h">
+		<Unit filename="/Users/jchevet/mygit/pipex/libft/include/libft.h">
 			<Option target="pipex"/>
 		</Unit>
 		<Unit filename="/Users/jchevet/mygit/pipex/main.c">

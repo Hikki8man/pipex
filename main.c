@@ -33,6 +33,17 @@ void	init_data(t_data *data)
 	data->cmd_list = NULL;
 }
 
+void exit_perror(char *name)
+{
+	perror(name);
+	exit(EXIT_FAILURE);
+}
+
+void close_perror(int fd, char *name)
+{
+	if (close(fd) == -1)
+		exit_perror(name);
+}
 
 t_cmd	*cmd_lst_last(t_cmd *cmd_l)
 {
@@ -67,12 +78,6 @@ void	add_back(t_cmd **cmd_list, t_cmd *new_cmd)
 		last = cmd_lst_last(*cmd_list);
 		last->next = new_cmd;
 	}
-}
-
-void exit_perror(char *name)
-{
-	perror(name);
-	exit(EXIT_FAILURE);
 }
 
 void	add_slash_to_path(char **path_tab)
@@ -153,9 +158,13 @@ void get_cmd_path(t_cmd **cmd_list, char **path_tab)
 			tmp->path = ft_strjoin(path_tab[i], tmp->name);
 			if (tmp->path == NULL)
 				exit(2);
-			isopen = open(tmp->path, O_RDONLY;
+			isopen = open(tmp->path, O_RDONLY);
 			if (isopen != -1)
+			{
+				close_perror(isopen, "open");
 				break ;
+			}
+			
 			free(tmp->path);
 			tmp->path = NULL;
 			i++;
@@ -169,86 +178,80 @@ void get_cmd_path(t_cmd **cmd_list, char **path_tab)
 
 void openfiles(char **av, int ac, t_data *data)
 {
-	data->fd1 = open(av[1], O_RDWR, S_IRWXU);
+	data->fd1 = open(av[1], O_RDWR, S_IRWXU, S_IRWXG);
 	if (data->fd1 == -1)
 		exit_perror("open");
-	data->fd2 = open(av[ac - 1], O_CREAT | O_RDWR, S_IRWXU);
+	data->fd2 = open(av[ac - 1], O_CREAT | O_TRUNC | O_RDWR, S_IRWXU, S_IRWXG);
 	if (data->fd2 == -1)
 		exit_perror("open");
 
 }
 
+void child1(int pid, int *fd, t_data *data, char **envp)
+{
+	pid = fork();
+	if (pid == -1)
+		exit_perror("fork");
+	if (pid == 0)
+	{
+		close_perror(fd[0], "close pipe 0");
+		dup2(data->fd1, STDIN_FILENO);
+		dup2(fd[1], STDOUT_FILENO);
+		close_perror(fd[1], "close pipe 1");
+		if (execve(data->cmd_list->path, data->cmd_list->param, envp))
+			exit_perror("execve pid1");
+	}
+}
+
+void child2(int pid, int *fd, t_data *data, char **envp)
+{
+	pid = fork();
+	if (pid == -1)
+		exit_perror("fork");
+	if (pid == 0) {
+		close_perror(fd[1], "close pipe 1");
+		dup2(fd[0], STDIN_FILENO);
+		close_perror(fd[0], "close pipe 0");
+		dup2(data->fd2, STDOUT_FILENO);
+		data->cmd_list = data->cmd_list->next;
+		if (execve(data->cmd_list->path, data->cmd_list->param, envp) == -1)
+			exit_perror("execve pid2");
+	}
+}
+
+void close_all_fd(t_data *data, int *fd)
+{
+	close_perror(data->fd1, "close file 1");
+	close_perror(data->fd2, "close file 2");
+	close_perror(fd[0], "close pipe 0");
+	close_perror(fd[1], "close pipe 1");
+}
+
 int main(int argc, char **argv, char **envp)
  {
+	int fd[2];
 	int pid1;
 	int pid2;
-	int fd[2];
-	char *line;
 	char **path_tab;
-	t_cmd *cmd_list;
 	t_data data;
-
-	init_data(&data);
-	openfiles(argv, argc, &data);
-	path_tab = split_env_path(envp);
-	get_cmd(argc, argv, &cmd_list);
-	get_cmd_path(&cmd_list, path_tab);
-	int i;
-
-	while (cmd_list)
+	
+	if (argc == 5)
 	{
-		i = 0;
-		printf("Name: %s\nNB OF PARAM: %d\n", cmd_list->name,
-		 cmd_list->nb_param);
-		while (cmd_list->param[i])
-		{
-			printf("param %d: %s\n", i + 1, cmd_list->param[i]);
-			i++;
-		}
-		cmd_list = cmd_list->next;
+		init_data(&data);
+		openfiles(argv, argc, &data);
+		path_tab = split_env_path(envp);
+		get_cmd(argc, argv, &data.cmd_list);
+		get_cmd_path(&data.cmd_list, path_tab);
+		if (pipe(fd) == -1)
+			exit_perror("pipe");
+		child1(pid1, fd, &data, envp);
+		child2(pid2, fd, &data, envp);
+		close_all_fd(&data, fd);
+		if (waitpid(pid1, NULL, 0) == -1)
+			exit_perror("waitpid");
+		if (waitpid(pid2, NULL, 0) == -1)
+			exit_perror("waitpid");
+		return 0;
 	}
-//	while (paths_tab[i])
-//	{
-//		printf("%s\n", paths_tab[i]);
-//		i++;
-//	}
-	 int std_out = dup(STDIN_FILENO);
-//	if (pipe(fd) == -1)
-//		exit_perror("pipe");
-//	pid1 = fork();
-//	if (pid1 == -1)
-//		exit_perror("fork");
-//	if (pid1 == 0) {
-//
-//		dup2(fd[1], STDOUT_FILENO);
-//		close(fd[0]);
-//		close(fd[1]);
-//		execve("ls", arr, envp);
-//	}
-//	 pid2 = fork();
-//	 if (pid2 == -1)
-//		 exit_perror("fork");
-//	 if (pid2 == 0)
-//	 {
-//	 	waitpid(pid1, NULL, 0);
-//	 	dup2(fd[0], STDIN_FILENO);
-//	 	close(fd[0]);
-//	 	close(fd[1]);
-//		 int ret = execlp(
-//				 "/usr/bin/grep",
-//				 "grep",
-//				 "libft",
-//				 NULL
-//		 );
-//		 if (ret == -1) {
-//			 perror("execlp");
-//			 exit(EXIT_FAILURE);
-//		 }
-//
-//	 }
-//	close(fd[1]);
-//	close(fd[0]);
-//	waitpid(pid1, NULL, 0);
-//	waitpid(pid2, NULL, 0);
-	return 0;
+	 return (-1);
 }

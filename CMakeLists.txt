@@ -54,6 +54,6 @@ add_executable(pipex main.c
         libft/ft_u_itoa_base.c
         libft/ft_ullitoa_base.c
         libft/get_next_line.c
-        libft/libft.h)
+        libft/include/libft.h)
 
 target_link_libraries(pipex /Users/jchevet/mygit/pipex/libft/libft.a)
