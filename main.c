@@ -52,7 +52,6 @@ t_cmd	*cmd_lst_last(t_cmd *cmd_l)
 	return (cmd_l);
 }
 
-
 t_cmd *new_cmd(void)
 {
 	t_cmd *cmd;
@@ -96,7 +95,6 @@ void	add_slash_to_path(char **path_tab)
 		i++;
 	}
 }
-
 
 char	**split_env_path(char **envp)
 {
@@ -207,7 +205,11 @@ void child2(int pid, int *fd, t_data *data, char **envp)
 {
 	pid = fork();
 	if (pid == -1)
+	{
+		close_perror(fd[0], "close pipe 0");
+		close_perror(fd[1], "close pipe 1");
 		exit_perror("fork");
+	}
 	if (pid == 0) {
 		close_perror(fd[1], "close pipe 1");
 		dup2(fd[0], STDIN_FILENO);
@@ -237,13 +239,13 @@ int main(int argc, char **argv, char **envp)
 	
 	if (argc == 5)
 	{
+		if (pipe(fd) == -1)
+			exit_perror("pipe");
 		init_data(&data);
 		openfiles(argv, argc, &data);
 		path_tab = split_env_path(envp);
 		get_cmd(argc, argv, &data.cmd_list);
 		get_cmd_path(&data.cmd_list, path_tab);
-		if (pipe(fd) == -1)
-			exit_perror("pipe");
 		child1(pid1, fd, &data, envp);
 		child2(pid2, fd, &data, envp);
 		close_all_fd(&data, fd);
