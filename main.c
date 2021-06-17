@@ -15,7 +15,6 @@ typedef struct s_cmd
 	char	*name;
 	char	*path;
 	char	**param;
-	int 	nb_param;
 	struct s_cmd *next;
 }t_cmd;
 
@@ -23,6 +22,7 @@ typedef struct s_data
 {
 	int		fd1;
 	int		fd2;
+	int 	nb_of_process;
 	t_cmd	*cmd_list;
 }t_data;
 
@@ -62,7 +62,6 @@ t_cmd *new_cmd(void)
 	cmd->param = NULL;
 	cmd->name = 0;
 	cmd->path = NULL;
-	cmd->nb_param = 0;
 	cmd->next = NULL;
 	return (cmd);
 }
@@ -114,7 +113,6 @@ int 	nb_of_param(char **param)
 {
 	int	i;
 
-
 	i = 0;
 	while (param[i])
 		i++;
@@ -134,12 +132,32 @@ void	get_cmd(int ac, char **av, t_cmd **cmd_l)
 			exit_perror("new_cmd");
 		cmd->param = ft_split(av[i], ' ');
 		cmd->name = *cmd->param;
-		cmd->nb_param = nb_of_param(cmd->param);
 		add_back(cmd_l, cmd);
 		i++;
 	}
 }
 
+void	free_cmd_list(t_cmd **cmd)
+{
+	t_cmd *tmp;
+	
+	while (*cmd)
+	{
+		tmp = *cmd;
+		if ((*cmd)->path)
+			free((*cmd)->path);
+		ft_free_str_tab((*cmd)->param);
+		free(*cmd);
+		*cmd = tmp->next;
+	}
+}
+
+void 	exit_failure(t_cmd **cmd, char **path_tab)
+{
+//	ft_free_str_tab(path_tab);
+//	free_cmd_list(cmd);
+	exit(1);
+}
 
 void get_cmd_path(t_cmd **cmd_list, char **path_tab)
 {
@@ -162,13 +180,14 @@ void get_cmd_path(t_cmd **cmd_list, char **path_tab)
 				close_perror(isopen, "open");
 				break ;
 			}
-			
 			free(tmp->path);
 			tmp->path = NULL;
 			i++;
 		}
-		if (tmp->path == NULL)
-			exit(3); //cmd not found / valid
+		if (tmp->path == NULL) {
+			ft_printf("%s: command not found\n", tmp->name);
+			exit_failure(cmd_list, path_tab);
+		}//cmd not found / valid
 		tmp = tmp->next;
 	}
 	ft_free_str_tab(path_tab);
@@ -189,7 +208,11 @@ void child1(int pid, int *fd, t_data *data, char **envp)
 {
 	pid = fork();
 	if (pid == -1)
+	{
+		close_perror(fd[0], "close pipe 0");
+		close_perror(fd[1], "close pipe 1");
 		exit_perror("fork");
+	}
 	if (pid == 0)
 	{
 		close_perror(fd[0], "close pipe 0");
@@ -210,7 +233,29 @@ void child2(int pid, int *fd, t_data *data, char **envp)
 		close_perror(fd[1], "close pipe 1");
 		exit_perror("fork");
 	}
-	if (pid == 0) {
+	if (pid == 0)
+	{
+		close_perror(fd[1], "close pipe 1");
+		dup2(fd[0], STDIN_FILENO);
+		close_perror(fd[0], "close pipe 0");
+		dup2(data->fd2, STDOUT_FILENO);
+		data->cmd_list = data->cmd_list->next;
+		if (execve(data->cmd_list->path, data->cmd_list->param, envp) == -1)
+			exit_perror("execve pid2");
+	}
+}
+
+void child3(int pid, int *fd, t_data *data, char **envp)
+{
+	pid = fork();
+	if (pid == -1)
+	{
+		close_perror(fd[0], "close pipe 0");
+		close_perror(fd[1], "close pipe 1");
+		exit_perror("fork");
+	}
+	if (pid == 0)
+	{
 		close_perror(fd[1], "close pipe 1");
 		dup2(fd[0], STDIN_FILENO);
 		close_perror(fd[0], "close pipe 0");
@@ -231,12 +276,14 @@ void close_all_fd(t_data *data, int *fd)
 
 int main(int argc, char **argv, char **envp)
  {
-	int fd[2];
+	int **fd;
 	int pid1;
 	int pid2;
 	char **path_tab;
 	t_data data;
 	
+	data.nb_of_process = argc - 3;
+	 fd = malloc(data.nb_of_process * sizeof(int *));
 	if (argc == 5)
 	{
 		if (pipe(fd) == -1)
@@ -253,7 +300,8 @@ int main(int argc, char **argv, char **envp)
 			exit_perror("waitpid");
 		if (waitpid(pid2, NULL, 0) == -1)
 			exit_perror("waitpid");
-		return 0;
+		free_cmd_list(&data.cmd_list);
+		exit(0);
 	}
-	 return (-1);
+	 exit(-1);
 }
