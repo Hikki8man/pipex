@@ -1,15 +1,18 @@
-total 96
-drwxr-xr-x  14 jchevet  2020    476 Jun 17 12:39 .
-drwxr-xr-x   8 jchevet  2020    272 Jun 11 13:21 ..
--rw-r--r--@  1 jchevet  2020   8196 Jun 16 17:40 .DS_Store
-drwxr-xr-x  14 jchevet  2020    476 Jun 17 12:17 .git
--rw-r--r--   1 jchevet  2020     42 Jun 17 12:13 .gitignore
-drwxr-xr-x   9 jchevet  2020    306 Jun 17 12:23 .idea
--rw-r--r--   1 jchevet  2020   1572 Jun 17 12:22 CMakeLists.txt
--rwxr-xr-x   1 jchevet  2020  14444 Jun 17 12:39 a.out
-drwxr-xr-x  12 jchevet  2020    408 Jun 17 12:31 cmake-build-debug
-drwxr-xr-x  60 jchevet  2020   2040 Jun 17 12:18 libft
--rw-r--r--   1 jchevet  2020   4530 Jun 17 12:39 main.c
--rw-r--r--   1 jchevet  2020      0 Jun 17 12:41 test.txt
--rw-r--r--   1 jchevet  2020      0 Jun 17 12:39 test2.txt
--rw-r--r--   1 jchevet  2020     15 Jun 14 14:18 text
+total 168
+drwxr-xr-x   17 jchevet  2020    578 Jun 18 15:50 .
+drwxr-xr-x    8 jchevet  2020    272 Jun 11 13:21 ..
+-rw-r--r--@   1 jchevet  2020   8196 Jun 16 17:40 .DS_Store
+drwxr-xr-x   14 jchevet  2020    476 Jun 18 14:48 .git
+-rw-r--r--    1 jchevet  2020     42 Jun 17 12:13 .gitignore
+drwxr-xr-x    8 jchevet  2020    272 Jun 18 15:13 .idea
+-rw-r--r--    1 jchevet  2020   1577 Jun 18 14:15 CMakeLists.txt
+-rw-r--r--    1 jchevet  2020    616 Jun 18 15:13 Makefile
+-rwxr-xr-x    1 jchevet  2020  24604 Jun 18 12:58 a.out
+drwxr-xr-x   13 jchevet  2020    442 Jun 18 15:48 cmake-build-debug
+drwxr-xr-x  114 jchevet  2020   3876 Jun 18 15:23 libft
+-rwxr-xr-x    1 jchevet  2020  24724 Jun 18 15:50 pipex
+drwxr-xr-x    4 jchevet  2020    136 Jun 18 15:50 srcs
+-rw-r--r--    1 jchevet  2020      0 Jun 18 15:51 test.txt
+-rw-r--r--    1 jchevet  2020      1 Jun 18 14:14 test2.txt
+-rwxr-xr-x    1 jchevet  2020      0 Jun 18 12:52 test3.txt
+-rw-r--r--    1 jchevet  2020      0 Jun 18 15:50 test8.txt
