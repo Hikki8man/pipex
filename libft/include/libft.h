@@ -75,6 +75,7 @@ void				ft_putnbr_fd(int n, int fd);
 char				**ft_split(const char *s, char c);
 void				ft_free_str_tab(char **t);
 int					ft_free_tab(char **t, int i);
+void				ft_free_int_tab(int **t);
 char				*ft_strjoin(const char *s1, const char *s2);
 char				*ft_strtrim(const char *s1, const char *set);
 char				*ft_strmapi(const char *s, char (*f)(unsigned int, char));

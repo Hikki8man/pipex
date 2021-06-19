@@ -22,7 +22,8 @@ SRC =	ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
         ft_free_tab.c ft_printf/ft_flags.c ft_printf/ft_get_prec_width.c ft_printf/ft_print_c_str.c \
         ft_printf/ft_print_int.c ft_printf/ft_print_p_u_x.c \
         ft_printf/ft_print_percent.c ft_printf/ft_printf.c \
-        ft_printf/ft_put_field_and_prec.c ft_putstr_nl_fd.c ft_free_str_tab.c
+        ft_printf/ft_put_field_and_prec.c ft_putstr_nl_fd.c ft_free_str_tab.c \
+        ft_free_int_tab.c
 
 OBJ = ${SRC:.c=.o}
 
