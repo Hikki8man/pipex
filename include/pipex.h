@@ -47,7 +47,7 @@ int		path_exist(char *path);
 int		**malloc_pipes(int ac, t_data *data);
 
 //--Create process--------------------------------------------------------------
-void	create_child(int pid, int **fd, t_data *data, char **envp);
+int		create_child(int pid, int **fd, t_data *data, char **envp);
 
 //--Close fd--------------------------------------------------------------------
 void	close_all_fd(t_data *data, int **fd);

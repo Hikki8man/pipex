@@ -11,8 +11,8 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 
 	pid = 0;
-//	if (argc == 5)
-//	{
+	if (argc == 5)
+	{
 		init_data(&data);
 		openfiles(argv, argc, &data);
 		path_tab = split_env_path(envp);
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 			exit_perror("waitpid");
 		free_cmd_list(&data.cmd_list);
 		return (0);
-//	}
+	}
 	ft_putstr_nl_fd("Error\nArgument count != 5\n", 2);
 	return (-1);
 }

@@ -31,7 +31,7 @@ static void	inter_cmd(int **fd, int i)
 		exit_perror("dup2");
 }
 
-void	create_child(int pid, int **fd, t_data *data, char **envp)
+int	create_child(int pid, int **fd, t_data *data, char **envp)
 {
 	int		i;
 	t_cmd	*cmd_list;
@@ -41,6 +41,8 @@ void	create_child(int pid, int **fd, t_data *data, char **envp)
 	while (++i < data->nb_of_process)
 	{
 		pid = fork();
+		ft_printf("pid %d | i %d | nb process %d\n", pid, i, data->nb_of_process);
+//		pid = -1;
 		if (pid == 0)
 		{
 			if (i == 0)
@@ -56,8 +58,9 @@ void	create_child(int pid, int **fd, t_data *data, char **envp)
 		else if (pid == -1)
 		{
 			perror("fork");
-			exit(2);
+			return (-1);
 		}
 		cmd_list = cmd_list->next;
 	}
+	return (0);
 }
