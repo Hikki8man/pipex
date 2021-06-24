@@ -37,11 +37,13 @@ int	create_child(int pid, int **fd, t_data *data, char **envp)
 	t_cmd	*cmd_list;
 
 	cmd_list = data->cmd_list;
+	int pid1;
 	i = -1;
 	while (++i < data->nb_of_process)
 	{
 		pid = fork();
-		ft_printf("pid %d | i %d | nb process %d\n", pid, i, data->nb_of_process);
+		pid1 = getpid();
+//		ft_printf("pid %d | pid1 %d | i %d | nb process %d\n", pid, pid1, i, data->nb_of_process);
 //		pid = -1;
 		if (pid == 0)
 		{

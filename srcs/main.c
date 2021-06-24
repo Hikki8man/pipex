@@ -22,7 +22,9 @@ int	main(int argc, char **argv, char **envp)
 		set_pipe(&data, fd);
 		create_child(pid, fd, &data, envp);
 		close_all_fd(&data, fd);
-		if (waitpid(pid, NULL, 0) == -1)
+		int pid1 = getpid();
+		ft_printf("pid %d | pid1 %d | nb process %d\n", pid, pid1, data.nb_of_process);
+		if (waitpid(pid, NULL, 0) == -1)//useless ?
 			exit_perror("waitpid");
 		free_cmd_list(&data.cmd_list);
 		return (0);
