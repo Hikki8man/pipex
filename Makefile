@@ -1,6 +1,6 @@
 NAME = pipex
 CC = gcc
-CFLAGS = -g3 -fsanitize=address
+CFLAGS =
 RM = rm -rf
 
 INC_PATH = include/
@@ -26,12 +26,12 @@ OBJS = $(SRCS:.c=.o)
 %.o: %.c $(INC_PATH)$(INC)
 	$(CC) $(CFLAGS) -I $(INC_PATH)$(INC) -c $< -o $@
 
-all: $(NAME) libft_
+all: $(NAME) libft
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ -I $(INC_PATH)$(INC) $(OBJS) $(LIB_PATH)$(LIB)
 
-libft_:
+libft:
 	make -C $(LIB_PATH)
 
 clean:
@@ -45,7 +45,7 @@ fclean:
 
 re: fclean all
 
-.PHONY: all libft_ clean fclean re
+.PHONY: all libft clean fclean re
 
 
 

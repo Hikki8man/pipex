@@ -14,7 +14,7 @@ static void	add_slash_to_path(char **path_tab)
 {
 	char	*tmp;
 	int		i;
-
+//TODO free path if fail
 	i = 0;
 	while (path_tab[i])
 	{
@@ -37,7 +37,6 @@ char	**split_env_path(char **envp)
 		i++;
 	envp[i] += 5;
 	paths_tab = ft_split(envp[i], ':');
-	paths_tab = NULL;
 	if (paths_tab == NULL)
 		exit(1);
 	add_slash_to_path(paths_tab);

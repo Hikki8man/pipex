@@ -2,7 +2,7 @@
 
 //fd[0] = READ
 //fd[1] = WRITE
-//TODO error compile libft, check fsanitize, while i < 1000 (waitpid)
+//TODO error compile libft, check fsanitize, check how waitpid work (waitall process to finish before exit)
 int	main(int argc, char **argv, char **envp)
 {
 	int		**fd;

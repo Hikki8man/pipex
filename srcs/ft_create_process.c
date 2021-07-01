@@ -50,6 +50,10 @@ int	create_child(int pid, int **fd, t_data *data, char **envp)
 			else
 				inter_cmd(fd, i);
 			close_all_fd(data, fd);
+			if (i == 0)
+				sleep(10);
+			else
+				sleep(5);
 			if (execve(cmd_list->path, cmd_list->param, envp) == -1)
 				exit_perror("execve");
 		}
