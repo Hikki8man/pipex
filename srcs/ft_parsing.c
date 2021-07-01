@@ -37,6 +37,9 @@ char	**split_env_path(char **envp)
 		i++;
 	envp[i] += 5;
 	paths_tab = ft_split(envp[i], ':');
+	paths_tab = NULL;
+	if (paths_tab == NULL)
+		exit(1);
 	add_slash_to_path(paths_tab);
 	return (paths_tab);
 }
@@ -72,7 +75,7 @@ void	get_cmd_path(t_cmd **cmd_list, char **path_tab)
 		{
 			tmp->path = ft_strjoin(path_tab[i++], tmp->name);
 			if (tmp->path == NULL)
-				exit(2);// free cmd_list, cmd param**
+				exit_failure(cmd_list, path_tab);
 			if (path_exist(tmp->path) == 1)
 				break ;
 			free(tmp->path);

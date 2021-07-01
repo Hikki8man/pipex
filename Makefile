@@ -1,6 +1,6 @@
 NAME = pipex
 CC = gcc
-CFLAGS =
+CFLAGS = -g3 -fsanitize=address
 RM = rm -rf
 
 INC_PATH = include/

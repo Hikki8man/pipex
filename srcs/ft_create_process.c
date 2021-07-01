@@ -37,14 +37,10 @@ int	create_child(int pid, int **fd, t_data *data, char **envp)
 	t_cmd	*cmd_list;
 
 	cmd_list = data->cmd_list;
-	int pid1;
 	i = -1;
 	while (++i < data->nb_of_process)
 	{
 		pid = fork();
-		pid1 = getpid();
-//		ft_printf("pid %d | pid1 %d | i %d | nb process %d\n", pid, pid1, i, data->nb_of_process);
-//		pid = -1;
 		if (pid == 0)
 		{
 			if (i == 0)
@@ -55,13 +51,10 @@ int	create_child(int pid, int **fd, t_data *data, char **envp)
 				inter_cmd(fd, i);
 			close_all_fd(data, fd);
 			if (execve(cmd_list->path, cmd_list->param, envp) == -1)
-				exit_perror("execve pid");
+				exit_perror("execve");
 		}
 		else if (pid == -1)
-		{
-			perror("fork");
-			return (-1);
-		}
+			exit_perror("fork");
 		cmd_list = cmd_list->next;
 	}
 	return (0);

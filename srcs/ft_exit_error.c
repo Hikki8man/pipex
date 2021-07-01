@@ -30,12 +30,12 @@ int	path_exist(char *path)
 void	exit_perror(char *name)
 {
 	perror(name);
-	exit(EXIT_FAILURE);
+	exit (2);
 }
 
 void 	exit_failure(t_cmd **cmd, char **path_tab)
 {
 	ft_free_str_tab(path_tab);
 	free_cmd_list(cmd);
-	exit(1);
+	exit(EXIT_FAILURE);
 }
