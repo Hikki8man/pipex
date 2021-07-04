@@ -43,10 +43,15 @@ int	create_child(int pid, int **fd, t_data *data, char **envp)
 		pid = fork();
 		if (pid == 0)
 		{
-			if (i == 0)
-				first_cmd(data, fd);
-			else if (!cmd_list->next)
+			printf ("bjr %d\n", i);
+			if (!cmd_list->next)
+			{
+				printf ("ha %i\n", i);
+				wait(NULL);
 				last_cmd(data, fd, i);
+			}
+			else if (i == 0)
+				first_cmd(data, fd);
 			else
 				inter_cmd(fd, i);
 			close_all_fd(data, fd);

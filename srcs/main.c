@@ -6,13 +6,13 @@
 int	main(int argc, char **argv, char **envp)
 {
 	int		**fd;
-	int		pid;
+	pid_t	pid;
 	char	**path_tab;
 	t_data	data;
 
 	pid = 0;
-	if (argc == 5)
-	{
+//	if (argc == 5)
+//	{
 		init_data(&data);
 		path_tab = split_env_path(envp);
 		get_cmd(argc, argv, &data.cmd_list);
@@ -21,12 +21,11 @@ int	main(int argc, char **argv, char **envp)
 		openfiles(argv, argc, &data);
 		set_pipe(&data, fd);
 		create_child(pid, fd, &data, envp);
+		wait(NULL);
 		close_all_fd(&data, fd);
-		if (waitpid(pid, NULL, 0) == -1)//useless ?
-			exit_perror("waitpid");
 		free_cmd_list(&data.cmd_list);
 		return (0);
-	}
+//	}
 	ft_putstr_nl_fd("Error\nArgument count != 5\n", 2);
 	return (-1);
 }

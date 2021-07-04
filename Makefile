@@ -26,7 +26,7 @@ OBJS = $(SRCS:.c=.o)
 %.o: %.c $(INC_PATH)$(INC)
 	$(CC) $(CFLAGS) -I $(INC_PATH)$(INC) -c $< -o $@
 
-all: $(NAME) libft
+all: libft $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ -I $(INC_PATH)$(INC) $(OBJS) $(LIB_PATH)$(LIB)
