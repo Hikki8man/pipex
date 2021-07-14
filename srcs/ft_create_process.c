@@ -31,7 +31,7 @@ static void	inter_cmd(int **fd, int i)
 		exit_perror("dup2");
 }
 
-int	create_child(int pid, int **fd, t_data *data, char **envp)
+int	create_child(pid_t pid, int **fd, t_data *data, char **envp)
 {
 	int		i;
 	t_cmd	*cmd_list;
@@ -40,30 +40,43 @@ int	create_child(int pid, int **fd, t_data *data, char **envp)
 	i = -1;
 	while (++i < data->nb_of_process)
 	{
+
 		pid = fork();
+		printf("pid: %d, i = %d\n", pid, i);
+//		printf("main pro %d\n", getpid());
+		int stdoutfd = dup(STDOUT_FILENO);
 		if (pid == 0)
 		{
-			printf ("bjr %d\n", i);
 			if (!cmd_list->next)
-			{
-				printf ("ha %i\n", i);
-				wait(NULL);
 				last_cmd(data, fd, i);
-			}
 			else if (i == 0)
 				first_cmd(data, fd);
 			else
 				inter_cmd(fd, i);
 			close_all_fd(data, fd);
-			if (i == 0)
+			if (i == 0) {
 				sleep(10);
-			else
+				ft_putstr_fd("slept 10\n", stdoutfd);
+			}
+			else {
 				sleep(5);
+				ft_putstr_fd("slept 5\n", stdoutfd);
+			}
+			int pid1 = getpid();
+			int papa = getppid();
+			ft_putstr_fd("pid1: ", stdoutfd);
+			ft_putnbr_fd(pid1, stdoutfd);
+			ft_putchar_fd('\n', stdoutfd);
+			ft_putstr_fd("papa: ", stdoutfd);
+			ft_putnbr_fd(papa, stdoutfd);
+			ft_putchar_fd('\n', stdoutfd);
 			if (execve(cmd_list->path, cmd_list->param, envp) == -1)
 				exit_perror("execve");
 		}
 		else if (pid == -1)
 			exit_perror("fork");
+//		waitpid(pid, NULL, WNOHANG);
+		wait(NULL);
 		cmd_list = cmd_list->next;
 	}
 	return (0);

@@ -20,8 +20,11 @@ int	main(int argc, char **argv, char **envp)
 		fd = malloc_pipes(argc, &data);
 		openfiles(argv, argc, &data);
 		set_pipe(&data, fd);
+		printf("main pro %d\n", getpid());
 		create_child(pid, fd, &data, envp);
-		wait(NULL);
+		printf("pas finito\n");
+//		waitpid(pid, NULL, 0);
+		printf("finito\n");
 		close_all_fd(&data, fd);
 		free_cmd_list(&data.cmd_list);
 		return (0);
