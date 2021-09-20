@@ -10,7 +10,7 @@ int	**malloc_pipes(int ac, t_data *data)
 	int	i;
 
 	i = 0;
-	data->nb_of_process = ac - 3;
+	data->nb_of_process += ac - 3;
 	fd = ft_calloc(data->nb_of_process + 1, sizeof(int *));
 	if (fd == NULL)
 		return (NULL);

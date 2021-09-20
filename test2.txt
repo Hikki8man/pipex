@@ -1,4 +1,0 @@
--rw-r--r--    1 jchevet  2020      0 Jun 18 15:51 test.txt$
--rw-r--r--    1 jchevet  2020      1 Jun 18 14:14 test2.txt$
--rwxr-xr-x    1 jchevet  2020      0 Jun 18 12:52 test3.txt$
--rw-r--r--    1 jchevet  2020      0 Jun 18 15:50 test8.txt$

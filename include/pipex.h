@@ -22,6 +22,7 @@ typedef struct s_data
 {
 	int		fd1;
 	int		fd2;
+	int 	fd1nogud;
 	int 	nb_of_process;
 	t_cmd	*cmd_list;
 }t_data;
