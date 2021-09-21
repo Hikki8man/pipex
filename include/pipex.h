@@ -22,7 +22,8 @@ typedef struct s_data
 {
 	int		fd1;
 	int		fd2;
-	int 	fd1nogud;
+	char 	*filename1;
+	char	*filename2;
 	int 	nb_of_process;
 	t_cmd	*cmd_list;
 }t_data;
@@ -41,7 +42,7 @@ void	set_pipe(t_data *data, int **fd);
 void	get_cmd_path(t_cmd **cmd_list, char **path_tab);
 void	get_cmd(int ac, char **av, t_cmd **cmd_l);
 char	**split_env_path(char **envp);
-void	openfiles(char **av, int ac, t_data *data);
+void	savefilenames(char **av, int ac, t_data *data);
 int		path_exist(char *path);
 
 //--Malloc pipe-----------------------------------------------------------------

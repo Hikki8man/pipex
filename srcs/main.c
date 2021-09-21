@@ -13,8 +13,8 @@ int	main(int argc, char **argv, char **envp)
 		path_tab = split_env_path(envp);
 		get_cmd(argc, argv, &data.cmd_list);
 		get_cmd_path(&data.cmd_list, path_tab);
+		savefilenames(argv, argc, &data);
 		fd = malloc_pipes(argc, &data);
-		openfiles(argv, argc, &data);
 		set_pipe(&data, fd);
 		create_child(pid, fd, &data, envp);
 		close_all_fd(&data, fd);

@@ -8,7 +8,6 @@ void	init_data(t_data *data)
 {
 	data->fd1 = 0;
 	data->fd2 = 0;
-	data->fd1nogud = 0;
 	data->cmd_list = NULL;
 	data->nb_of_process = 0;
 }
