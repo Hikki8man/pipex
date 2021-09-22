@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parsing.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jchevet <jchevet@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/22 14:03:32 by jchevet           #+#    #+#             */
+/*   Updated: 2021/09/22 14:03:32 by jchevet          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/pipex.h"
 
 void	savefilenames(char **av, int ac, t_data *data)
@@ -10,13 +22,16 @@ static void	add_slash_to_path(char **path_tab)
 {
 	char	*tmp;
 	int		i;
-//TODO free path if fail
+
 	i = 0;
 	while (path_tab[i])
 	{
 		tmp = ft_strjoin(path_tab[i], "/");
 		if (!tmp)
-			exit(-1);
+		{
+			ft_free_str_tab(path_tab);
+			exit(EXIT_FAILURE);
+		}
 		free(path_tab[i]);
 		path_tab[i] = tmp;
 		i++;
@@ -57,28 +72,26 @@ void	get_cmd(int ac, char **av, t_cmd **cmd_l)
 	}
 }
 
-void	get_cmd_path(t_cmd **cmd_list, char **path_tab)
+void	get_cmd_path(t_cmd *cmd_list, t_data *data)
 {
-	t_cmd	*tmp;
 	int		i;
+	char	*path;
 
-	tmp = *cmd_list;
-	while (tmp)
+	i = 0;
+	while (data->path_tab[i])
 	{
-		i = 0;
-		while (path_tab[i])
+		path = ft_strjoin(data->path_tab[i++], cmd_list->name);
+		if (path == NULL)
+			exit_failure(&data->cmd_list, data->path_tab);
+		if (path_exist(path, cmd_list) == 1)
 		{
-			tmp->path = ft_strjoin(path_tab[i++], tmp->name);
-			if (tmp->path == NULL)
-				exit_failure(cmd_list, path_tab);
-			if (path_exist(tmp->path) == 1)
-				break ;
-			free(tmp->path);
-			tmp->path = NULL;
+			free(path);
+			break ;
 		}
-		if (command_not_found(tmp->path, tmp->name))
-			exit_failure(cmd_list, path_tab);
-		tmp = tmp->next;
+		free(path);
+		path = NULL;
 	}
-	ft_free_str_tab(path_tab);
+	if (command_not_found(cmd_list->path, cmd_list->name))
+		exit_failure(&data->cmd_list, data->path_tab);
+	ft_free_str_tab(data->path_tab);
 }

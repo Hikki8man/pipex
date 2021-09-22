@@ -4,19 +4,18 @@ int	main(int argc, char **argv, char **envp)
 {
 	int		**fd;
 	pid_t	pid;
-	char	**path_tab;
 	t_data	data;
 
 	if (argc == 5)
 	{
 		init_data(&data);
-		path_tab = split_env_path(envp);
+		data.path_tab = split_env_path(envp);
 		get_cmd(argc, argv, &data.cmd_list);
-		get_cmd_path(&data.cmd_list, path_tab);
 		savefilenames(argv, argc, &data);
 		fd = malloc_pipes(argc, &data);
 		set_pipe(&data, fd);
 		create_child(pid, fd, &data, envp);
+		wait(NULL);
 		close_all_fd(&data, fd);
 		free_cmd_list(&data.cmd_list);
 		return (0);

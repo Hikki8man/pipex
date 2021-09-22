@@ -37,7 +37,7 @@ static void	inter_cmd(int **fd, int i)
 		exit_perror("dup2");
 }
 
-int	create_child(pid_t pid, int **fd, t_data *data, char **envp)
+void	create_child(pid_t pid, int **fd, t_data *data, char **envp)
 {
 	int		i;
 	t_cmd	*cmd_list;
@@ -49,14 +49,14 @@ int	create_child(pid_t pid, int **fd, t_data *data, char **envp)
 		pid = fork();
 		if (pid == 0)
 		{
-			if (!cmd_list->next) {
+			if (!cmd_list->next)
 				last_cmd(data, fd, i);
-			}
 			else if (i == 0)
 				first_cmd(data, fd);
 			else
 				inter_cmd(fd, i);
 			close_all_fd(data, fd);
+			get_cmd_path(cmd_list, data);
 			if (execve(cmd_list->path, cmd_list->param, envp) == -1)
 				exit_perror(cmd_list->name);
 		}
@@ -64,6 +64,4 @@ int	create_child(pid_t pid, int **fd, t_data *data, char **envp)
 			exit_perror("fork");
 		cmd_list = cmd_list->next;
 	}
-	wait(NULL);
-	return (0);
 }
