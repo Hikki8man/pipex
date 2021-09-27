@@ -21,14 +21,14 @@ int	**malloc_pipes(int ac, t_data *data)
 	data->nb_of_process += ac - 3;
 	fd = ft_calloc(data->nb_of_process + 1, sizeof(int *));
 	if (fd == NULL)
-		return (NULL);
+		exit_failure(&data->cmd_list, data->path_tab);
 	while (i < data->nb_of_process)
 	{
 		fd[i] = ft_calloc(2, sizeof(int));
 		if (fd[i] == NULL)
 		{
 			ft_free_int_tab(fd);
-			return (NULL);
+			exit_failure(&data->cmd_list, data->path_tab);
 		}
 		i++;
 	}

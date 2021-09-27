@@ -50,7 +50,7 @@ int	path_exist(char *path, t_cmd *cmd)
 void	exit_perror(char *name)
 {
 	perror(name);
-	exit (2);
+	exit (EXIT_FAILURE);
 }
 
 void	exit_failure(t_cmd **cmd, char **path_tab)

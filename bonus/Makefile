@@ -1,4 +1,4 @@
-NAME = pipex_bonus
+NAME = pipex
 CC = gcc
 CFLAGS = -Werror -Wextra -Wall
 RM = rm -rf

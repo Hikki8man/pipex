@@ -49,7 +49,7 @@ void	set_pipe(t_data *data, int **fd);
 
 //--Parsing---------------------------------------------------------------------
 void	get_cmd_path(t_cmd *cmd_list, t_data *data);
-void	get_cmd(int ac, char **av, t_cmd **cmd_l);
+void	get_cmd(int ac, char **av, t_cmd **cmd_l, t_data *data);
 char	**split_env_path(char **envp);
 void	savefilenames(char **av, int ac, t_data *data);
 int		path_exist(char *path, t_cmd *cmd);

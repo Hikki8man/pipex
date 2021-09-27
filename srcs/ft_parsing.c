@@ -49,12 +49,12 @@ char	**split_env_path(char **envp)
 	envp[i] += 5;
 	paths_tab = ft_split(envp[i], ':');
 	if (paths_tab == NULL)
-		exit(1);
+		exit(EXIT_FAILURE);
 	add_slash_to_path(paths_tab);
 	return (paths_tab);
 }
 
-void	get_cmd(int ac, char **av, t_cmd **cmd_l)
+void	get_cmd(int ac, char **av, t_cmd **cmd_l, t_data *data)
 {
 	t_cmd	*cmd;
 	int		i;
@@ -62,10 +62,20 @@ void	get_cmd(int ac, char **av, t_cmd **cmd_l)
 	i = 2;
 	while (i < ac - 1)
 	{
+		cmd = NULL;
 		cmd = new_cmd();
 		if (!cmd)
-			exit_perror("new_cmd");
+		{
+			ft_putstr_fd("Error\nmalloc failed\n", 2);
+			exit_failure(cmd_l, data->path_tab);
+		}
 		cmd->param = ft_split(av[i], ' ');
+		if (!cmd->param)
+		{
+			ft_free_tab(cmd->param, i);
+			ft_free_str_tab(data->path_tab);
+			exit_perror("new_cmd");
+		}
 		cmd->name = *cmd->param;
 		add_back(cmd_l, cmd);
 		i++;

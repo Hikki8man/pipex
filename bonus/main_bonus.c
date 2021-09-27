@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		init_data(&data);
 		data.path_tab = split_env_path(envp);
-		get_cmd(argc, argv, &data.cmd_list);
+		get_cmd(argc, argv, &data.cmd_list, &data);
 		savefilenames(argv, argc, &data);
 		fd = malloc_pipes(argc, &data);
 		set_pipe(&data, fd);
