@@ -32,7 +32,7 @@ int	path_exist(char *path, t_cmd *cmd)
 	{
 		if (cmd->path != NULL)
 			free(cmd->path);
-		cmd->path = ft_strdup(path);
+		cmd->path = ft_strdup(path);//TODO check if path is NULL
 		if (access(path, X_OK) == 0)
 		{
 			close_perror(fd, "open");
