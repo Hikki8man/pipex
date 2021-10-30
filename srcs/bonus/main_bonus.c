@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jchevet <jchevet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/26 14:02:29 by jchevet           #+#    #+#             */
-/*   Updated: 2021/09/26 14:02:31 by jchevet          ###   ########lyon.fr   */
+/*   Created: 2021/09/26 14:29:46 by jchevet           #+#    #+#             */
+/*   Updated: 2021/09/26 14:29:48 by jchevet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 
 	pid = 0;
-	if (argc == 5)
+	if (argc >= 5)
 	{
 		init_data(&data);
 		data.path_tab = split_env_path(envp);
@@ -33,7 +33,6 @@ int	main(int argc, char **argv, char **envp)
 		free_cmd_list(&data.cmd_list);
 		return (0);
 	}
-	ft_putstr_nl_fd("Error\nArgument count != 5, \
-					FILENAME | CMD | CMD | FILENAME", 2);
+	ft_putstr_nl_fd("Error\nArgument count < 5", 2);
 	return (-1);
 }
