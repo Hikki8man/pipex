@@ -33,7 +33,7 @@ int	main(int argc, char **argv, char **envp)
 		free_cmd_list(&data.cmd_list);
 		return (0);
 	}
-	ft_putstr_nl_fd("Error\nArgument count != 5, \
-					FILENAME | CMD | CMD | FILENAME", 2);
+	ft_putstr_nl_fd("Error\nArgument count != 5 \
+	FILENAME | CMD | CMD | FILENAME", 2);
 	return (-1);
 }
