@@ -28,5 +28,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	ft_putstr_fd("Error\nArgument count < 5\n", 2);
 	ft_putstr_fd("FILENAME | CMD | CMD | FILENAME\n", 2);
-	return (-1);
+	return (1);
 }
