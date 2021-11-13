@@ -19,16 +19,3 @@ void	init_data(t_data *data)
 	data->cmd_list = NULL;
 	data->nb_of_process = 0;
 }
-
-void	set_pipe(t_data *data, int **fd)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->nb_of_process)
-	{
-		if (pipe(fd[i]) == -1)
-			exit_perror("pipe");
-		i++;
-	}
-}

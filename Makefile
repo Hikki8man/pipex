@@ -16,7 +16,6 @@ SRC =	main.c \
 		ft_init_data.c \
 		ft_parsing.c \
 		ft_command_list.c \
-		ft_malloc_pipes.c \
 		ft_create_process.c \
 		ft_close_fd.c \
 		ft_exit_error.c

@@ -35,12 +35,12 @@ int	path_exist(char *path, t_cmd *cmd)
 		cmd->path = ft_strdup(path);
 		if (access(path, X_OK) == 0)
 		{
-			close_perror(fd, "open");
+			close_perror(fd);
 			return (1);
 		}
 		else
 		{
-			close_perror(fd, "open");
+			close_perror(fd);
 			return (0);
 		}
 	}
@@ -53,9 +53,8 @@ void	exit_perror(char *name)
 	exit (EXIT_FAILURE);
 }
 
-void	exit_failure(t_cmd **cmd, char **path_tab)
+void	exit_failure(t_cmd **cmd)
 {
-	ft_free_str_tab(path_tab);
 	free_cmd_list(cmd);
 	exit(EXIT_FAILURE);
 }

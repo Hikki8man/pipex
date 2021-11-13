@@ -12,25 +12,23 @@
 
 #include "../include/pipex.h"
 
-void	close_all_fd(t_data *data, int **fd)
-{
-	int	i;
-
-	i = 0;
-	if (data->fd1 > 0)
-		close_perror(data->fd1, "close file 1");
-	if (data->fd2 > 0)
-		close_perror(data->fd2, "close file 2");
-	while (fd[i])
-	{
-		close_perror(fd[i][0], "close pipe 0");
-		close_perror(fd[i][1], "close pipe 1");
-		i++;
-	}
-}
-
-void	close_perror(int fd, char *name)
+void	close_perror(int fd)
 {
 	if (close(fd) == -1)
-		exit_perror(name);
+		perror("close");
+}
+
+void	close_pipes(t_data *data, t_cmd *cmd_list)
+{
+	if (cmd_list->next)
+	{
+		data->prev_pipe_in = data->pipe[0];
+		close_perror(data->pipe[1]);
+	}
+	else
+	{
+		close_perror(data->pipe[0]);
+		close_perror(data->pipe[1]);
+		close_perror(data->prev_pipe_in);
+	}
 }

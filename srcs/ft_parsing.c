@@ -41,11 +41,22 @@ static void	add_slash_to_path(char **path_tab)
 char	**split_env_path(char **envp)
 {
 	int		i;
+	int		found_path;
 	char	**paths_tab;
 
-	i = 0;
-	while (ft_strncmp(envp[i], "PATH=", 5))
-		i++;
+	i = -1;
+	found_path = 0;
+	paths_tab = NULL;
+	while (envp[++i])
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		{
+			found_path = 1;
+			break ;
+		}
+	}
+	if (found_path == 0)
+		return (paths_tab);
 	envp[i] += 5;
 	paths_tab = ft_split(envp[i], ':');
 	if (paths_tab == NULL)
@@ -54,7 +65,7 @@ char	**split_env_path(char **envp)
 	return (paths_tab);
 }
 
-void	get_cmd(int ac, char **av, t_cmd **cmd_l, t_data *data)
+void	get_cmd(int ac, char **av, t_cmd **cmd_l)
 {
 	t_cmd	*cmd;
 	int		i;
@@ -67,13 +78,12 @@ void	get_cmd(int ac, char **av, t_cmd **cmd_l, t_data *data)
 		if (!cmd)
 		{
 			ft_putstr_fd("Error\nmalloc failed\n", 2);
-			exit_failure(cmd_l, data->path_tab);
+			exit_failure(cmd_l);
 		}
 		cmd->param = ft_split(av[i], ' ');
 		if (!cmd->param)
 		{
 			ft_free_tab(cmd->param, i);
-			ft_free_str_tab(data->path_tab);
 			exit_perror("new_cmd");
 		}
 		cmd->name = *cmd->param;
@@ -87,21 +97,24 @@ void	get_cmd_path(t_cmd *cmd_list, t_data *data)
 	int		i;
 	char	*path;
 
-	i = 0;
-	while (data->path_tab[i])
+	i = -1;
+	if (data->path_tab)
 	{
-		path = ft_strjoin(data->path_tab[i++], cmd_list->name);
-		if (path == NULL)
-			exit_failure(&data->cmd_list, data->path_tab);
-		if (path_exist(path, cmd_list) == 1)
+		while (data->path_tab[++i])
 		{
+			path = ft_strjoin(data->path_tab[i], cmd_list->name);
+			if (path == NULL)
+				exit_failure(&data->cmd_list);
+			if (path_exist(path, cmd_list) == 1)
+			{
+				free(path);
+				break ;
+			}
 			free(path);
-			break ;
+			path = NULL;
 		}
-		free(path);
-		path = NULL;
 	}
-	if (command_not_found(cmd_list->path, cmd_list->name))
-		exit_failure(&data->cmd_list, data->path_tab);
 	ft_free_str_tab(data->path_tab);
+	if (command_not_found(cmd_list->path, cmd_list->name))
+		exit_failure(&data->cmd_list);
 }

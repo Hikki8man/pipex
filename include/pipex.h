@@ -30,6 +30,8 @@ typedef struct s_data
 {
 	int		fd1;
 	int		fd2;
+	int		pipe[2];
+	int		prev_pipe_in;
 	char	*filename1;
 	char	*filename2;
 	char	**path_tab;
@@ -49,24 +51,21 @@ void	set_pipe(t_data *data, int **fd);
 
 //--Parsing---------------------------------------------------------------------
 void	get_cmd_path(t_cmd *cmd_list, t_data *data);
-void	get_cmd(int ac, char **av, t_cmd **cmd_l, t_data *data);
+void	get_cmd(int ac, char **av, t_cmd **cmd_l);
 char	**split_env_path(char **envp);
 void	savefilenames(char **av, int ac, t_data *data);
 int		path_exist(char *path, t_cmd *cmd);
 
-//--Malloc pipe-----------------------------------------------------------------
-int		**malloc_pipes(int ac, t_data *data);
-
 //--Create process--------------------------------------------------------------
-void	create_child(pid_t pid, int **fd, t_data *data, char **envp);
+void	create_child(t_data *data, char **envp);
 
 //--Close fd--------------------------------------------------------------------
-void	close_all_fd(t_data *data, int **fd);
-void	close_perror(int fd, char *name);
+void	close_pipes(t_data *data, t_cmd *cmd_list);
+void	close_perror(int fd);
 
 //--Exit / Errors---------------------------------------------------------------
 int		command_not_found(char *path, char *name);
 void	exit_perror(char *name);
-void	exit_failure(t_cmd **cmd, char **path_tab);
+void	exit_failure(t_cmd **cmd);
 
 #endif
